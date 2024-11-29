@@ -30,11 +30,11 @@ const STATE = {
 const initPixelStreaming = () => {
   // 控制UI样式
   const PixelStreamingApplicationStyles = new PixelStreamingApplicationStyle({
-    customStyles: {
-      "#uiFeatures": {
-        display: "none",
-      },
-    },
+    // customStyles: {
+    //   "#uiFeatures": {
+    //     display: "none",
+    //   },
+    // },
   });
   PixelStreamingApplicationStyles.applyStyleSheet();
 
@@ -53,6 +53,7 @@ const initPixelStreaming = () => {
       HoveringMouse: true, // 鼠标悬停：如果为 true，允许鼠标悬停并与 UI 进行交互。
       HoveringMouseMode: true, // 鼠标悬停模式：如果为 true，激活鼠标悬停模式以增强 UI 交互体验。
       SuppressBrowserKeys: false, // 抑制浏览器按键：如果为 true，将抑制浏览器的某些键盘输入，以防止干扰应用内的控制。
+      MatchViewportRes: true, // 匹配视窗分辨率：如果为 true，将调整视频分辨率以匹配视窗分辨率。
     },
   });
 

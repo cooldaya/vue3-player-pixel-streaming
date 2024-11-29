@@ -13,19 +13,17 @@ const opts = {
     // 接收UE消息
     console.log("receiveUEMsg", msg);
     receiveUEMsg.value += msg;
-  }
-}
+  },
+};
 </script>
 
 <template>
   <div id="layout">
-    <div class="left pointer-events-none">
-      <button @click="opts.sendMsg" class="pointer-events-auto">发送消息到UE</button>
-      <div>
-        <div>收到的ue消息:</div>{{ receiveUEMsg }}</div>
-    </div>
-    <PixelStreamingPlayer ss="ws://127.0.0.1" @receiveMessage="opts.receiveUEMsg" ref="playerInstanceRef" />
-    <div class="right">sss</div>
+    <PixelStreamingPlayer
+      ss="ws://10.1.10.17:1235"
+      @receiveMessage="opts.receiveUEMsg"
+      ref="playerInstanceRef"
+    />
   </div>
 </template>
 
@@ -50,7 +48,7 @@ const opts = {
 .pointer-events-none {
   pointer-events: none;
 }
-.pointer-events-auto{
+.pointer-events-auto {
   pointer-events: auto;
 }
 
