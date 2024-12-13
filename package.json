@@ -11,6 +11,7 @@
   "dependencies": {
     "@epicgames-ps/lib-pixelstreamingfrontend-ue5.2": "^0.5.8",
     "@epicgames-ps/lib-pixelstreamingfrontend-ui-ue5.2": "^0.4.8",
+    "mitt": "^3.0.1",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },

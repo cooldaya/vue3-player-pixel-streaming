@@ -1,29 +1,24 @@
 <script setup>
-import PixelStreamingPlayer from "@/views/PixelStreamingPlayer.vue";
-import { ref } from "vue";
+import PixelStreamingPlayer from "@/views/pixel-streaming-player.vue";
+import { onMounted, ref } from "vue";
+import { connectPixelStreaming, watchUEEvents } from "@/ue";
 const playerInstanceRef = ref(null);
 
-const receiveUEMsg = ref("");
-const opts = {
-  sendMsg() {
-    // 发送消息到UE
-    playerInstanceRef.value.sendMsgToUE("打爆你狗头");
+onMounted(() => {
+  // 是否链接使用像素流模式、否则使用UE内嵌网页模式
+  connectPixelStreaming(playerInstanceRef.value);
+});
+
+watchUEEvents({
+  jumpurl: (data) => {
+    console.log(data);
   },
-  receiveUEMsg(msg) {
-    // 接收UE消息
-    console.log("receiveUEMsg", msg);
-    receiveUEMsg.value += msg;
-  },
-};
+});
 </script>
 
 <template>
   <div id="layout">
-    <PixelStreamingPlayer
-      ss="ws://10.1.10.17:1235"
-      @receiveMessage="opts.receiveUEMsg"
-      ref="playerInstanceRef"
-    />
+    <PixelStreamingPlayer ss="ws://10.1.10.17:1235" ref="playerInstanceRef" />
   </div>
 </template>
 

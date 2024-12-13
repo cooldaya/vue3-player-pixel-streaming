@@ -1,4 +1,5 @@
 <script setup>
+// npm i @epicgames-ps/lib-pixelstreamingfrontend-ue5.2 @epicgames-ps/lib-pixelstreamingfrontend-ui-ue5.2
 import {
   Config,
   PixelStreaming,
@@ -19,7 +20,7 @@ const props = defineProps({
 const loading = ref(true);
 
 const emitter = defineEmits(["receiveMessage", "loaded"]);
-
+let ueWebEmitter = null;
 const pixelStreamingContainerRef = ref(null);
 
 const STATE = {
@@ -81,15 +82,8 @@ const initPixelStreaming = () => {
   // 监听消息
   stream.addResponseEventListener("handle_responses", (data) => {
     emitter("receiveMessage", data);
+    ueWebEmitter?.emit("receive-pixel-msg", data);
   });
-};
-
-const opts = {
-  // 发送消息给 UE
-  sendMsgToUE(payload) {
-    if (!STATE.stream) return;
-    STATE.stream.emitUIInteraction(payload);
-  },
 };
 
 onMounted(() => {
@@ -98,7 +92,16 @@ onMounted(() => {
 
 // 导出接口
 defineExpose({
-  sendMsgToUE: opts.sendMsgToUE,
+  // 像素流发送消息给 UE
+  sendMsgToUE: (payload) => {
+    if (!STATE.stream) return;
+    STATE.stream.emitUIInteraction(payload);
+  },
+  // 设置 WEB - UE - 像素流 通信的 emitter
+  setUeWebEmitter: (emitter) => {
+    (ueWebEmitter = emitter)
+
+  },
 });
 </script>
 
@@ -115,6 +118,7 @@ defineExpose({
 <style scoped>
 .pixel-streaming-container {
   height: 100%;
+  width: 100%;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   min-height: 100px; /** 最小高度 放置不可见 */
